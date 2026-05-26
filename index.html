@@ -8,601 +8,46 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#070A12; --bg-2:#0B1020;
-  --surface:rgba(255,255,255,0.04); --surface-2:rgba(255,255,255,0.06);
-  --border:rgba(255,255,255,0.10); --border-strong:rgba(255,255,255,0.18);
-  --text:#EDF1FA; --text-dim:#A6B0C3; --text-faint:#6C778C;
-  --g1:#22D3EE; --g2:#4F8BFF; --g3:#A855F7; --g4:#FB7185;
-  --grad: linear-gradient(110deg, var(--g1) 0%, var(--g2) 32%, var(--g3) 64%, var(--g4) 100%);
-  --grad-soft: linear-gradient(110deg, rgba(34,211,238,.18), rgba(79,139,255,.18), rgba(168,85,247,.18), rgba(251,113,133,.18));
-  --radius:18px; --radius-lg:26px; --maxw:1240px;
-}
-
-*{box-sizing:border-box; margin:0; padding:0;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:'Manrope', system-ui, sans-serif;
-  background:var(--bg); color:var(--text);
-  font-weight:400; line-height:1.6;
-  overflow-x:hidden; min-height:100vh;
-  -webkit-font-smoothing:antialiased;
-}
-
-/* ===== FONDO GLOBAL (orbes + malla) ===== */
-.bg-layer{
-  position:fixed; inset:0; z-index:-2;
-  background:radial-gradient(ellipse at top, #0B1226 0%, var(--bg) 60%, #04060C 100%);
-  pointer-events:none;
-}
-.bg-mesh{
-  position:fixed; inset:0; z-index:-1;
-  background-image: radial-gradient(circle at center, rgba(255,255,255,0.18) 1px, transparent 1.2px);
-  background-size:38px 38px;
-  opacity:0.05;
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
-  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
-  pointer-events:none;
-}
-.orb{
-  position:fixed; border-radius:50%;
-  filter:blur(90px); opacity:0.42; z-index:-1; pointer-events:none;
-}
-.orb-1{ width:520px; height:520px; background:var(--g1); top:-120px; left:-120px;}
-.orb-2{ width:600px; height:600px; background:var(--g3); top:30%; right:-180px;}
-.orb-3{ width:560px; height:560px; background:var(--g2); bottom:-200px; left:30%;}
-
-/* ===== HELPERS ===== */
-.grad-text{
-  background:var(--grad);
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent; color:transparent;
-}
-.container{ max-width:var(--maxw); margin:0 auto; padding:0 28px;}
-.eyebrow{
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:'Manrope'; font-weight:600; font-size:13px;
-  color:var(--text-dim);
-  padding:8px 14px; border:1px solid var(--border);
-  border-radius:999px; background:var(--surface);
-  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-  letter-spacing:.02em;
-}
-h1,h2,h3,h4{ font-family:'Sora', sans-serif; line-height:1.15; letter-spacing:-0.01em;}
-h1{ font-weight:800; font-size:clamp(2.4rem, 5.2vw, 4.2rem);}
-h2{ font-weight:700; font-size:clamp(1.9rem, 3.6vw, 2.9rem);}
-h3{ font-weight:700; font-size:1.4rem;}
-p{ color:var(--text-dim);}
-
-/* ===== BOTONES ===== */
-.btn{
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:'Manrope'; font-weight:600; font-size:15px;
-  padding:13px 24px; border-radius:999px;
-  border:none; cursor:pointer; text-decoration:none;
-  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-  white-space:nowrap;
-}
-.btn-primary{
-  background:var(--grad); color:#06080F;
-}
-.btn-primary:hover{
-  transform:translateY(-3px);
-  box-shadow:0 14px 38px -10px rgba(79,139,255,.55);
-}
-.btn-ghost{
-  background:var(--surface); color:var(--text);
-  border:1px solid var(--border-strong);
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-}
-.btn-ghost:hover{
-  transform:translateY(-3px);
-  background:var(--surface-2);
-  box-shadow:0 14px 38px -14px rgba(168,85,247,.5);
-}
-
-/* ===== REVEAL ===== */
-.reveal{ opacity:0; transform:translateY(28px); transition: all .7s cubic-bezier(.2,.7,.2,1);}
-.reveal.in{ opacity:1; transform:none;}
-
-/* ===== NAVBAR ===== */
-#nav{
-  position:fixed; top:0; left:0; right:0; z-index:50;
-  padding:18px 0;
-  transition: background .3s ease, backdrop-filter .3s ease, border-color .3s ease, padding .3s ease;
-  border-bottom:1px solid transparent;
-}
-#nav.scrolled{
-  background:rgba(7,10,18,.72);
-  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-  border-bottom-color:var(--border);
-  padding:12px 0;
-}
-.nav-wrap{
-  max-width:var(--maxw); margin:0 auto; padding:0 28px;
-  display:flex; align-items:center; justify-content:space-between; gap:24px;
-}
-.nav-logo{ display:flex; align-items:center; gap:10px;}
-.nav-logo img{ height:38px; width:auto; display:block;}
-.nav-logo .fallback{ display:none; font-family:'Sora'; font-weight:800; font-size:20px; letter-spacing:.06em;}
-.nav-links{ display:flex; align-items:center; gap:28px;}
-.nav-links a{
-  color:var(--text-dim); text-decoration:none;
-  font-size:14.5px; font-weight:500;
-  transition: color .2s ease;
-}
-.nav-links a:hover{ color:var(--text);}
-.nav-cta{ display:flex; align-items:center; gap:10px;}
-.nav-cta .btn{ padding:10px 18px; font-size:14px;}
-.hamburger{
-  display:none; width:42px; height:42px;
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; cursor:pointer;
-  align-items:center; justify-content:center;
-  flex-direction:column; gap:5px;
-}
-.hamburger span{
-  width:18px; height:2px; background:var(--text); border-radius:2px;
-  transition:transform .3s ease, opacity .3s ease;
-}
-.hamburger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg);}
-.hamburger.open span:nth-child(2){ opacity:0;}
-.hamburger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg);}
-
-.mobile-menu{
-  display:none;
-  position:fixed; top:74px; left:16px; right:16px; z-index:49;
-  background:rgba(11,16,32,.92);
-  border:1px solid var(--border-strong); border-radius:var(--radius);
-  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  padding:18px; flex-direction:column; gap:6px;
-}
-.mobile-menu.open{ display:flex;}
-.mobile-menu a{
-  color:var(--text-dim); text-decoration:none;
-  padding:12px 14px; border-radius:12px;
-  font-weight:500; transition: background .2s ease, color .2s ease;
-}
-.mobile-menu a:hover{ background:var(--surface); color:var(--text);}
-.mobile-menu .btn{ margin-top:8px; justify-content:center;}
-
-/* ===== HERO ===== */
-.hero{
-  padding:170px 0 90px;
-}
-.hero-grid{
-  display:grid; grid-template-columns:1.05fr .95fr;
-  gap:60px; align-items:center;
-}
-.hero-eyebrow{ margin-bottom:22px;}
-.hero h1{ margin-bottom:22px;}
-.hero .lead{
-  font-size:1.12rem; color:var(--text-dim);
-  max-width:560px; margin-bottom:22px;
-}
-.hero .tagline{
-  font-style:italic; color:var(--text);
-  border-left:3px solid var(--g3);
-  padding:8px 0 8px 16px; margin-bottom:30px;
-  font-weight:500;
-}
-.hero-cta{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:46px;}
-.hero-stats{ display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;}
-.stat{ }
-.stat-num{
-  font-family:'Sora'; font-weight:800; font-size:1.85rem;
-  line-height:1.05; margin-bottom:4px;
-  background:var(--grad);
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.stat-label{ font-size:13px; color:var(--text-faint); line-height:1.4;}
-
-/* HERO logo */
-.hero-visual{
-  position:relative;
-  display:flex; align-items:center; justify-content:center;
-  min-height:560px;
-}
-.hero-glow{
-  position:absolute; width:380px; height:380px;
-  background:var(--grad); border-radius:50%;
-  filter:blur(70px); opacity:.55;
-  animation: pulse 5s ease-in-out infinite;
-  z-index:0;
-}
-@keyframes pulse{
-  0%,100%{ opacity:.45; transform:scale(.92);}
-  50%{ opacity:.7; transform:scale(1.05);}
-}
-.orbit{
-  position:absolute; border:1px dashed rgba(255,255,255,.18);
-  border-radius:50%; pointer-events:none;
-}
-.orbit-1{ width:480px; height:480px; animation: spin 40s linear infinite;}
-.orbit-2{ width:600px; height:600px; animation: spin 60s linear infinite reverse;
-  border-color:rgba(168,85,247,.22);}
-@keyframes spin{ to { transform: rotate(360deg);} }
-
-.logo-float{
-  position:relative; z-index:2;
-  width:420px; max-width:80vw;
-  animation: float 6s ease-in-out infinite;
-  filter: drop-shadow(0 30px 50px rgba(0,0,0,.45));
-}
-@keyframes float{
-  0%,100%{ transform:translateY(0);}
-  50%{ transform:translateY(-22px);}
-}
-.logo-fallback{
-  position:relative; z-index:2;
-  display:none;
-  background:var(--surface); border:1px solid var(--border-strong);
-  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  padding:48px 56px; border-radius:var(--radius-lg);
-  text-align:center;
-}
-.logo-fallback .big{
-  font-family:'Sora'; font-weight:800; font-size:2.6rem;
-  letter-spacing:.08em; margin-bottom:8px;
-}
-.logo-fallback .small{
-  font-size:13px; color:var(--text-faint);
-}
-
-/* ===== SECTION SHARED ===== */
-section{ padding:90px 0;}
-.section-head{ text-align:center; max-width:780px; margin:0 auto 56px;}
-.section-head .eyebrow{ margin-bottom:18px;}
-.section-head h2{ margin-bottom:16px;}
-.section-head p{ font-size:1.05rem;}
-
-/* ===== ALIADO ===== */
-.aliado-card{
-  background:var(--grad-soft);
-  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  border:1px solid var(--border-strong);
-  border-radius:var(--radius-lg);
-  padding:56px 48px;
-  text-align:center;
-  max-width:980px; margin:0 auto;
-}
-.aliado-card .eyebrow{ margin-bottom:18px;}
-.aliado-card h3{
-  font-size:clamp(1.6rem, 3vw, 2.4rem);
-  font-weight:700; margin-bottom:18px;
-}
-.aliado-card p{ font-size:1.08rem; max-width:760px; margin:0 auto;}
-
-/* ===== MERCADO (stats) ===== */
-.stat-grid{
-  display:grid; grid-template-columns:repeat(4, 1fr); gap:22px;
-}
-.stat-card{
-  background:var(--surface); border:1px solid var(--border);
-  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border-radius:var(--radius); padding:30px 26px;
-  transition: transform .3s ease, border-color .3s ease;
-}
-.stat-card:hover{ transform:translateY(-4px); border-color:var(--border-strong);}
-.stat-card .big{
-  font-family:'Sora'; font-weight:800;
-  font-size:clamp(2rem, 3vw, 2.6rem);
-  line-height:1.05; margin-bottom:10px;
-  background:var(--grad);
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.stat-card .desc{ font-size:14.5px; color:var(--text-dim);}
-
-.warn-card{
-  margin-top:32px;
-  background:var(--surface-2); border:1px solid var(--border-strong);
-  border-left:3px solid var(--g4);
-  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border-radius:var(--radius); padding:26px 30px;
-  display:flex; gap:18px; align-items:flex-start;
-}
-.warn-card .ico{ font-size:1.8rem; flex-shrink:0;}
-.warn-card p{ color:var(--text);}
-.warn-card strong{ color:var(--text);}
-
-/* ===== SERVICIOS ===== */
-.svc-grid{
-  display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
-}
-.svc-card{
-  position:relative;
-  background:var(--surface); border:1px solid var(--border);
-  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border-radius:var(--radius); padding:32px 28px;
-  transition: transform .35s ease;
-  overflow:hidden;
-}
-.svc-card::before{
-  content:""; position:absolute; inset:0;
-  padding:1px; border-radius:var(--radius);
-  background:var(--grad);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  opacity:0; transition: opacity .35s ease;
-  pointer-events:none;
-}
-.svc-card:hover{ transform:translateY(-8px);}
-.svc-card:hover::before{ opacity:1;}
-.svc-ico{
-  width:54px; height:54px; border-radius:14px;
-  background:var(--grad-soft); border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.6rem; margin-bottom:18px;
-}
-.svc-card h3{ font-size:1.2rem; margin-bottom:10px;}
-.svc-card p{ font-size:14.5px;}
-
-/* ===== TIENDA ===== */
-.tienda-toolbar{
-  display:flex; justify-content:space-between; align-items:center; gap:18px;
-  margin-bottom:32px; flex-wrap:wrap;
-}
-.chips{ display:flex; flex-wrap:wrap; gap:10px;}
-.chip{
-  font-family:'Manrope'; font-weight:600; font-size:13.5px;
-  color:var(--text-dim);
-  padding:9px 18px; border-radius:999px;
-  background:var(--surface); border:1px solid var(--border);
-  cursor:pointer;
-  transition: all .25s ease;
-  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-}
-.chip:hover{ color:var(--text); border-color:var(--border-strong);}
-.chip.active{
-  background:var(--grad); color:#06080F;
-  border-color:transparent;
-}
-.cart-pill{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 18px; border-radius:999px;
-  background:var(--surface); border:1px solid var(--border-strong);
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-  font-weight:600; font-size:14px; color:var(--text);
-}
-.cart-pill .count{
-  display:inline-flex; align-items:center; justify-content:center;
-  min-width:24px; height:24px; padding:0 7px;
-  border-radius:999px; font-size:12px; font-weight:700;
-  background:var(--grad); color:#06080F;
-}
-
-.prod-grid{
-  display:grid; grid-template-columns:repeat(4, 1fr); gap:22px;
-}
-.prod-card{
-  background:var(--surface); border:1px solid var(--border);
-  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border-radius:var(--radius); overflow:hidden;
-  display:flex; flex-direction:column;
-  transition: transform .3s ease, border-color .3s ease;
-}
-.prod-card:hover{ transform:translateY(-6px); border-color:var(--border-strong);}
-.prod-media{
-  position:relative; height:170px;
-  background:#0E1424;
-  display:flex; align-items:center; justify-content:center;
-  overflow:hidden;
-}
-.prod-media .emoji{ font-size:3.4rem;}
-.prod-badge{
-  position:absolute; top:12px; left:12px;
-  background:rgba(34,211,238,.18); color:var(--g1);
-  border:1px solid rgba(34,211,238,.35);
-  font-size:11.5px; font-weight:700;
-  padding:5px 10px; border-radius:999px;
-  letter-spacing:.02em;
-  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-}
-.prod-body{ padding:18px 18px 20px; display:flex; flex-direction:column; gap:8px; flex:1;}
-.prod-cat{
-  font-size:11px; font-weight:700; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--text-faint);
-}
-.prod-name{ font-family:'Sora'; font-weight:700; font-size:1rem; color:var(--text);}
-.prod-desc{ font-size:13.5px; color:var(--text-dim); flex:1;}
-.prod-foot{
-  display:flex; justify-content:space-between; align-items:center;
-  margin-top:10px; gap:10px;
-}
-.prod-price{
-  font-family:'Sora'; font-weight:700; font-size:1.15rem;
-  background:var(--grad);
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.btn-add{
-  font-family:'Manrope'; font-weight:600; font-size:13px;
-  padding:8px 14px; border-radius:999px;
-  background:var(--surface-2); color:var(--text);
-  border:1px solid var(--border-strong); cursor:pointer;
-  transition: all .25s ease;
-}
-.btn-add:hover{ background:var(--grad); color:#06080F; border-color:transparent;}
-.btn-add.added{ background:var(--g1); color:#06080F; border-color:transparent;}
-
-/* ===== DIFERENCIADORES ===== */
-.diff-grid{
-  display:grid; grid-template-columns:repeat(2, 1fr); gap:24px;
-}
-.diff-card{
-  display:flex; gap:20px; align-items:flex-start;
-  background:var(--surface); border:1px solid var(--border);
-  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border-radius:var(--radius); padding:28px 26px;
-  transition: transform .3s ease, border-color .3s ease;
-}
-.diff-card:hover{ transform:translateY(-4px); border-color:var(--border-strong);}
-.diff-ico{
-  flex-shrink:0;
-  width:50px; height:50px; border-radius:14px;
-  background:var(--grad-soft); border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center; font-size:1.5rem;
-}
-.diff-card h3{ font-size:1.15rem; margin-bottom:6px;}
-.diff-card p{ font-size:14.5px;}
-
-/* ===== CTA FINAL ===== */
-.cta-card{
-  background:var(--grad-soft);
-  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  border:1px solid var(--border-strong);
-  border-radius:var(--radius-lg);
-  padding:64px 48px; text-align:center;
-  max-width:980px; margin:0 auto;
-}
-.cta-card .eyebrow{ margin-bottom:18px;}
-.cta-card h2{ margin-bottom:16px;}
-.cta-card p{ font-size:1.08rem; max-width:620px; margin:0 auto 30px;}
-.cta-card .row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
-
-/* ===== FOOTER ===== */
-footer{
-  border-top:1px solid var(--border);
-  padding:60px 0 30px; margin-top:40px;
-  background:rgba(7,10,18,.55);
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-}
-.foot-grid{
-  display:grid; grid-template-columns:1.4fr .8fr .8fr 1fr; gap:40px;
-  margin-bottom:40px;
-}
-.foot-col h4{
-  font-family:'Sora'; font-weight:700; font-size:14px;
-  text-transform:uppercase; letter-spacing:.1em;
-  color:var(--text); margin-bottom:16px;
-}
-.foot-col ul{ list-style:none; display:flex; flex-direction:column; gap:10px;}
-.foot-col a{
-  color:var(--text-dim); text-decoration:none; font-size:14.5px;
-  transition: color .2s ease;
-}
-.foot-col a:hover{ color:var(--text);}
-.foot-brand img{ height:34px; width:auto; margin-bottom:14px; display:block;}
-.foot-brand .fallback{ display:none; font-family:'Sora'; font-weight:800; font-size:18px; letter-spacing:.06em; margin-bottom:14px;}
-.foot-brand p{ font-size:14px; color:var(--text-dim); max-width:320px;}
-.foot-bar{
-  border-top:1px solid var(--border);
-  padding-top:20px;
-  display:flex; justify-content:space-between; align-items:center;
-  gap:14px; flex-wrap:wrap;
-  font-size:13.5px; color:var(--text-faint);
-}
-
-/* ===== WHATSAPP FLOTANTE ===== */
-.wa-float{
-  position:fixed; bottom:24px; right:24px;
-  width:60px; height:60px; border-radius:50%;
-  background:linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.7rem; text-decoration:none;
-  z-index:40; color:#fff;
-  box-shadow:0 12px 32px -8px rgba(37,211,102,.6);
-  animation: wa-pulse 2.2s ease-out infinite;
-}
-@keyframes wa-pulse{
-  0%{ box-shadow:0 0 0 0 rgba(37,211,102,.6);}
-  70%{ box-shadow:0 0 0 22px rgba(37,211,102,0);}
-  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0);}
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1024px){
-  .hero{ padding:140px 0 70px;}
-  .hero-grid{ grid-template-columns:1fr; gap:40px; text-align:center;}
-  .hero .lead{ margin-left:auto; margin-right:auto;}
-  .hero .tagline{
-    border-left:none; border-top:3px solid var(--g3);
-    padding:14px 0 0; max-width:560px; margin-left:auto; margin-right:auto;
-  }
-  .hero-cta{ justify-content:center;}
-  .hero-stats{ max-width:560px; margin:0 auto;}
-  .hero-visual{ min-height:480px;}
-  .logo-float{ width:340px;}
-  .orbit-1{ width:400px; height:400px;}
-  .orbit-2{ width:520px; height:520px;}
-
-  .stat-grid, .svc-grid, .prod-grid, .diff-grid{
-    grid-template-columns:repeat(2, 1fr);
-  }
-  .foot-grid{ grid-template-columns:1fr 1fr; gap:30px;}
-}
-@media (max-width: 640px){
-  section{ padding:76px 0;}
-  .container{ padding:0 20px;}
-  .nav-links, .nav-cta .btn-ghost{ display:none;}
-  .hamburger{ display:flex;}
-  .hero{ padding:120px 0 60px;}
-  .hero h1{ font-size:2.2rem;}
-  .hero-stats{ grid-template-columns:1fr; gap:18px;}
-  .logo-float{ width:280px;}
-  .orbit-1{ width:320px; height:320px;}
-  .orbit-2{ width:420px; height:420px;}
-  .hero-visual{ min-height:380px;}
-  .hero-glow{ width:280px; height:280px;}
-
-  .stat-grid, .svc-grid, .prod-grid, .diff-grid{
-    grid-template-columns:1fr;
-  }
-  .aliado-card, .cta-card{ padding:42px 26px;}
-  .tienda-toolbar{ justify-content:center; flex-direction:column;}
-  .chips{ justify-content:center;}
-  .cart-pill{ align-self:center;}
-  .foot-grid{ grid-template-columns:1fr; gap:24px;}
-  .foot-bar{ justify-content:center; text-align:center;}
-}
-</style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-page="inicio">
 
-<!-- ===== FONDOS ===== -->
 <div class="bg-layer"></div>
 <div class="bg-mesh"></div>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 <div class="orb orb-3"></div>
 
-<!-- ===== NAVBAR ===== -->
 <nav id="nav">
   <div class="nav-wrap">
-    <a href="#inicio" class="nav-logo">
+    <a href="index.html" class="nav-logo">
       <img src="image/logo_largo.png" alt="AUTONOMOS" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
       <span class="fallback grad-text">AUTONOMOS</span>
     </a>
     <div class="nav-links">
-      <a href="#servicios">Servicios</a>
-      <a href="#tienda">Tienda</a>
-      <a href="#mercado">El Problema</a>
-      <a href="#aliado">Tu Aliado</a>
-      <a href="#diferenciadores">Por qué AUTONOMOS</a>
+      <a href="index.html" data-nav="inicio">Inicio</a>
+      <a href="servicios.html" data-nav="servicios">Servicios</a>
+      <a href="tienda.html" data-nav="tienda">Tienda</a>
+      <a href="nosotros.html" data-nav="nosotros">Quiénes Somos</a>
     </div>
     <div class="nav-cta">
-      <a href="#tienda" class="btn btn-ghost">Ver tienda</a>
+      <a href="tienda.html" class="btn btn-ghost">Ver tienda</a>
       <a href="#cta" class="btn btn-primary">Descargar app</a>
-      <button class="hamburger" id="hamburger" aria-label="Menú">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="tienda.html" class="cart-icon" aria-label="Carrito">🛒 <span class="cart-count" data-cart-count>0</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#servicios">Servicios</a>
-  <a href="#tienda">Tienda</a>
-  <a href="#mercado">El Problema</a>
-  <a href="#aliado">Tu Aliado</a>
-  <a href="#diferenciadores">Por qué AUTONOMOS</a>
+  <a href="index.html" data-nav="inicio">Inicio</a>
+  <a href="servicios.html" data-nav="servicios">Servicios</a>
+  <a href="tienda.html" data-nav="tienda">Tienda</a>
+  <a href="nosotros.html" data-nav="nosotros">Quiénes Somos</a>
   <a href="#cta" class="btn btn-primary">Descargar app</a>
 </div>
 
-<!-- ===== HERO ===== -->
+<!-- HERO -->
 <section class="hero" id="inicio">
   <div class="container">
     <div class="hero-grid">
@@ -612,8 +57,8 @@ footer{
         <p class="lead">Autopartes legales, talleres certificados, mecánicos a domicilio, grúas, ambulancias y asistencia vial 24/7. Una sola app conecta todo lo que tu carro necesita.</p>
         <p class="tagline">Unidos con autonomía movemos el mundo.</p>
         <div class="hero-cta">
-          <a href="#tienda" class="btn btn-primary">Explorar el marketplace →</a>
-          <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+          <a href="tienda.html" class="btn btn-primary">Explorar el marketplace →</a>
+          <a href="nosotros.html" class="btn btn-ghost">Conócenos</a>
         </div>
         <div class="hero-stats">
           <div class="stat"><div class="stat-num">6.2M</div><div class="stat-label">Vehículos activos en Colombia</div></div>
@@ -625,7 +70,7 @@ footer{
         <div class="orbit orbit-1"></div>
         <div class="orbit orbit-2"></div>
         <div class="hero-glow"></div>
-        <img src="image/logo.png" alt="AUTONOMOS" class="logo-float" id="heroLogo"
+        <img src="image/logo.png" alt="AUTONOMOS" class="logo-float"
              onerror="this.style.display='none'; document.getElementById('heroFallback').style.display='block';">
         <div class="logo-fallback" id="heroFallback">
           <div class="big grad-text">AUTONOMOS</div>
@@ -636,7 +81,7 @@ footer{
   </div>
 </section>
 
-<!-- ===== TU ALIADO ===== -->
+<!-- ALIADO -->
 <section id="aliado">
   <div class="container">
     <div class="aliado-card reveal">
@@ -647,7 +92,7 @@ footer{
   </div>
 </section>
 
-<!-- ===== MERCADO ===== -->
+<!-- EL PROBLEMA -->
 <section id="mercado">
   <div class="container">
     <div class="section-head reveal">
@@ -656,31 +101,22 @@ footer{
       <p>En Colombia, comprar un repuesto se volvió una apuesta de confianza. AUTONOMOS nace para devolver transparencia, trazabilidad y legalidad al sector.</p>
     </div>
     <div class="stat-grid">
-      <div class="stat-card reveal">
-        <div class="big">$410 mil M</div>
-        <div class="desc">en pérdidas por hurto de vehículos y autopartes en Colombia (ene–jul 2025).</div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="big">+27.000</div>
-        <div class="desc">carros, motos y autopartes hurtados en el país en solo los primeros 7 meses de 2025.</div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="big">2.000+</div>
-        <div class="desc">autopartes ilegales y 800 motores regrabados incautados en Bogotá en 2025.</div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="big">~10%</div>
-        <div class="desc">de los repuestos que entran al país lo hacen de forma irregular (contrabando), según la DIAN.</div>
-      </div>
+      <div class="stat-card reveal"><div class="big">$410 mil M</div><div class="desc">en pérdidas por hurto de vehículos y autopartes en Colombia (ene–jul 2025).</div></div>
+      <div class="stat-card reveal"><div class="big">+27.000</div><div class="desc">carros, motos y autopartes hurtados en el país en los primeros 7 meses de 2025.</div></div>
+      <div class="stat-card reveal"><div class="big">2.000+</div><div class="desc">autopartes ilegales y 800 motores regrabados incautados en Bogotá en 2025.</div></div>
+      <div class="stat-card reveal"><div class="big">~10%</div><div class="desc">de los repuestos que entran al país lo hacen de forma irregular (contrabando), según la DIAN.</div></div>
     </div>
     <div class="warn-card reveal">
       <div class="ico">⚠️</div>
-      <p><strong>El círculo vicioso:</strong> cada autoparte comprada en el mercado negro fortalece las redes criminales que roban y desmantelan vehículos. Piezas como espejos, ECU, llantas y baterías se revenden sin procedencia, debilitando al comercio formal, los talleres legales y la seguridad vial. <strong>AUTONOMOS rompe esa cadena</strong> con proveedores verificados y trazabilidad de cada pieza.</p>
+      <p><strong>El círculo vicioso:</strong> cada autoparte comprada en el mercado negro fortalece las redes criminales que roban y desmantelan vehículos. <strong>AUTONOMOS rompe esa cadena</strong> con proveedores verificados y trazabilidad de cada pieza.</p>
+    </div>
+    <div class="center-cta reveal">
+      <a href="nosotros.html" class="btn btn-ghost">Conoce nuestra apuesta →</a>
     </div>
   </div>
 </section>
 
-<!-- ===== SERVICIOS ===== -->
+<!-- SERVICIOS resumen -->
 <section id="servicios">
   <div class="container">
     <div class="section-head reveal">
@@ -689,104 +125,35 @@ footer{
       <p>Conectamos conductores, talleres, empresas y proveedores en una sola red colaborativa.</p>
     </div>
     <div class="svc-grid">
-      <div class="svc-card reveal">
-        <div class="svc-ico">⚙️</div>
-        <h3>Marketplace de Autopartes</h3>
-        <p>Catálogo unificado de repuestos nacionales e importados, con comparación de precios, trazabilidad y entrega a domicilio.</p>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-ico">🔧</div>
-        <h3>Servicios Mecánicos</h3>
-        <p>Talleres certificados y mecánicos a domicilio para mantenimiento, reparación y diagnóstico donde estés.</p>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-ico">🚛</div>
-        <h3>Grúas y Asistencia Vial</h3>
-        <p>Red de grúas aliadas para remolques, transporte de vehículos y asistencia en carretera 24/7.</p>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-ico">🚑</div>
-        <h3>Ambulancias y Emergencias</h3>
-        <p>Coordinación de ambulancias y atención de emergencias con tiempos de respuesta optimizados.</p>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-ico">📦</div>
-        <h3>Logística y Distribución</h3>
-        <p>Red de transporte y domicilios para repuestos, herramientas y productos automotrices.</p>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-ico">⭐</div>
-        <h3>Trabajadores Autónomos</h3>
-        <p>Plataforma de oportunidades para mecánicos, conductores de grúa y prestadores independientes verificados.</p>
-      </div>
+      <div class="svc-card reveal"><div class="svc-ico">⚙️</div><h3>Marketplace de Autopartes</h3><p>Catálogo unificado de repuestos nacionales e importados, con comparación de precios, trazabilidad y entrega a domicilio.</p></div>
+      <div class="svc-card reveal"><div class="svc-ico">🔧</div><h3>Servicios Mecánicos</h3><p>Talleres certificados y mecánicos a domicilio para mantenimiento, reparación y diagnóstico donde estés.</p></div>
+      <div class="svc-card reveal"><div class="svc-ico">🚛</div><h3>Grúas y Asistencia Vial</h3><p>Red de grúas aliadas para remolques, transporte de vehículos y asistencia en carretera 24/7.</p></div>
+      <div class="svc-card reveal"><div class="svc-ico">🚑</div><h3>Ambulancias y Emergencias</h3><p>Coordinación de ambulancias y atención de emergencias con tiempos de respuesta optimizados.</p></div>
+      <div class="svc-card reveal"><div class="svc-ico">📦</div><h3>Logística y Distribución</h3><p>Red de transporte y domicilios para repuestos, herramientas y productos automotrices.</p></div>
+      <div class="svc-card reveal"><div class="svc-ico">⭐</div><h3>Trabajadores Autónomos</h3><p>Plataforma de oportunidades para mecánicos, conductores de grúa y prestadores independientes verificados.</p></div>
+    </div>
+    <div class="center-cta reveal">
+      <a href="servicios.html" class="btn btn-primary">Ver todos los servicios →</a>
     </div>
   </div>
 </section>
 
-<!-- ===== TIENDA ===== -->
-<section id="tienda">
+<!-- PRODUCTOS DESTACADOS -->
+<section id="destacados">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">● Tienda AUTONOMOS</span>
       <h2>Repuestos <span class="grad-text">legales y con garantía</span></h2>
-      <p>Cada pieza con procedencia verificada. Compara, agrega al carrito y recíbelo en casa o en tu taller.</p>
+      <p>Algunos de los productos disponibles en nuestra tienda.</p>
     </div>
-    <div class="tienda-toolbar reveal">
-      <div class="chips" id="chips">
-        <button class="chip active" data-cat="todos">Todos</button>
-        <button class="chip" data-cat="frenos">Frenos</button>
-        <button class="chip" data-cat="motor">Motor</button>
-        <button class="chip" data-cat="electrico">Eléctrico</button>
-        <button class="chip" data-cat="llantas">Llantas</button>
-        <button class="chip" data-cat="accesorios">Accesorios</button>
-      </div>
-      <div class="cart-pill">🛒 Carrito <span class="count" id="cartCount">0</span></div>
-    </div>
-    <div class="prod-grid reveal" id="prodGrid"></div>
-  </div>
-</section>
-
-<!-- ===== DIFERENCIADORES ===== -->
-<section id="diferenciadores">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">● Por qué AUTONOMOS</span>
-      <h2>Diferencia que <span class="grad-text">se nota y se confía</span></h2>
-    </div>
-    <div class="diff-grid">
-      <div class="diff-card reveal">
-        <div class="diff-ico">📍</div>
-        <div>
-          <h3>Geolocalización en tiempo real</h3>
-          <p>Solicitudes dirigidas al proveedor disponible más cercano, reduciendo drásticamente los tiempos de respuesta.</p>
-        </div>
-      </div>
-      <div class="diff-card reveal">
-        <div class="diff-ico">🛡️</div>
-        <div>
-          <h3>Proveedores verificados</h3>
-          <p>Validación documental y de antecedentes para talleres, conductores de grúa, ambulancias y autónomos.</p>
-        </div>
-      </div>
-      <div class="diff-card reveal">
-        <div class="diff-ico">💲</div>
-        <div>
-          <h3>Precios transparentes</h3>
-          <p>Cotizaciones en tiempo real lado a lado, eliminando intermediarios innecesarios y la opacidad histórica del sector.</p>
-        </div>
-      </div>
-      <div class="diff-card reveal">
-        <div class="diff-ico">⚡</div>
-        <div>
-          <h3>Disponibilidad 24/7</h3>
-          <p>Cobertura permanente para emergencias, asistencia vial y solicitudes urgentes de repuestos o servicios.</p>
-        </div>
-      </div>
+    <div class="prod-grid" id="featuredGrid"></div>
+    <div class="center-cta reveal">
+      <a href="tienda.html" class="btn btn-primary">Ir a la tienda →</a>
     </div>
   </div>
 </section>
 
-<!-- ===== CTA FINAL ===== -->
+<!-- CTA FINAL -->
 <section id="cta">
   <div class="container">
     <div class="cta-card reveal">
@@ -801,7 +168,6 @@ footer{
   </div>
 </section>
 
-<!-- ===== FOOTER ===== -->
 <footer>
   <div class="container">
     <div class="foot-grid">
@@ -810,30 +176,22 @@ footer{
         <span class="fallback grad-text">AUTONOMOS</span>
         <p>Plataforma tecnológica integral del sector automotriz. Autopartes, servicios, logística y asistencia vial en un solo ecosistema digital.</p>
       </div>
-      <div class="foot-col">
-        <h4>Plataforma</h4>
-        <ul>
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#tienda">Tienda</a></li>
-          <li><a href="#diferenciadores">Por qué AUTONOMOS</a></li>
-        </ul>
-      </div>
-      <div class="foot-col">
-        <h4>Aliados</h4>
-        <ul>
-          <li><a href="#servicios">Talleres</a></li>
-          <li><a href="#servicios">Mecánicos a domicilio</a></li>
-          <li><a href="#servicios">Grúas y ambulancias</a></li>
-        </ul>
-      </div>
-      <div class="foot-col">
-        <h4>Contacto</h4>
-        <ul>
-          <li><a href="https://wa.me/573046452629" target="_blank" rel="noopener">📞 304 645 2629</a></li>
-          <li><a href="#">Bogotá, Colombia</a></li>
-          <li><a href="mailto:soporte@autonomos.co">soporte@autonomos.co</a></li>
-        </ul>
-      </div>
+      <div class="foot-col"><h4>Plataforma</h4><ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+        <li><a href="nosotros.html">Quiénes Somos</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Aliados</h4><ul>
+        <li><a href="servicios.html">Talleres</a></li>
+        <li><a href="servicios.html">Mecánicos a domicilio</a></li>
+        <li><a href="servicios.html">Grúas y ambulancias</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Contacto</h4><ul>
+        <li><a href="https://wa.me/573046452629" target="_blank" rel="noopener">📞 304 645 2629</a></li>
+        <li><a href="#">Bogotá, Colombia</a></li>
+        <li><a href="mailto:soporte@autonomos.co">soporte@autonomos.co</a></li>
+      </ul></div>
     </div>
     <div class="foot-bar">
       <div>© AUTONOMOS — Todos los derechos reservados</div>
@@ -842,71 +200,19 @@ footer{
   </div>
 </footer>
 
-<!-- ===== WHATSAPP FLOTANTE ===== -->
 <a href="https://wa.me/573046452629" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">💬</a>
 
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
 <script>
-// ===== NAVBAR scroll =====
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 30);
-});
-
-// ===== HAMBURGER =====
-const hamb = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamb.addEventListener('click', () => {
-  hamb.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-});
-mobileMenu.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    hamb.classList.remove('open');
-    mobileMenu.classList.remove('open');
-  });
-});
-
-// ===== REVEAL on scroll =====
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('in');
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-// ===== TIENDA =====
-const products = [
-  { n:'Pastillas de freno cerámicas',  c:'frenos',     cat:'Frenos',     d:'Juego delantero, baja generación de polvo.',                p:128000, e:'🛑' },
-  { n:'Discos de freno ventilados',    c:'frenos',     cat:'Frenos',     d:'Par delantero, alta disipación de calor.',                  p:245000, e:'⭕' },
-  { n:'Filtro de aceite premium',      c:'motor',      cat:'Motor',      d:'Compatible con la mayoría de motores 1.6L.',                p:32000,  e:'🛢️' },
-  { n:'Kit de correa de distribución', c:'motor',      cat:'Motor',      d:'Incluye tensor y rodillos. Marca certificada.',             p:389000, e:'⚙️' },
-  { n:'Bujías de iridio (x4)',         c:'motor',      cat:'Motor',      d:'Mayor durabilidad y mejor encendido.',                      p:96000,  e:'✨' },
-  { n:'Batería 12V 60Ah',              c:'electrico',  cat:'Eléctrico',  d:'Libre de mantenimiento, 18 meses de garantía.',             p:330000, e:'🔋' },
-  { n:'Alternador remanufacturado',    c:'electrico',  cat:'Eléctrico',  d:'Probado y con trazabilidad de serie.',                      p:520000, e:'⚡' },
-  { n:'Faro LED delantero',            c:'electrico',  cat:'Eléctrico',  d:'Unidad derecha, homologado.',                               p:178000, e:'💡' },
-  { n:'Llanta 195/65 R15',             c:'llantas',    cat:'Llantas',    d:'Uso urbano, excelente agarre en mojado.',                   p:289000, e:'🛞' },
-  { n:'Rin de aleación 16"',           c:'llantas',    cat:'Llantas',    d:'Diseño deportivo, peso reducido.',                          p:410000, e:'🛞' },
-  { n:'Tapete premium (juego)',        c:'accesorios', cat:'Accesorios', d:'Termoformado a la medida, antideslizante.',                 p:145000, e:'🧩' },
-  { n:'Cámara de reversa HD',          c:'accesorios', cat:'Accesorios', d:'Visión nocturna y líneas guía.',                            p:165000, e:'📷' }
-];
-
-let activeCat = 'todos';
-let cartCount = 0;
-const grid = document.getElementById('prodGrid');
-const chipsEl = document.getElementById('chips');
-const cartCountEl = document.getElementById('cartCount');
-
-function formatCOP(n){
-  return '$ ' + n.toLocaleString('es-CO');
-}
-
-function render(){
-  const items = activeCat === 'todos' ? products : products.filter(p => p.c === activeCat);
+// Productos destacados (4 primeros)
+(function(){
+  const grid = document.getElementById('featuredGrid');
+  if (!grid || !window.PRODUCTS) return;
+  const items = window.PRODUCTS.slice(0, 4);
   grid.innerHTML = items.map(p => `
-    <div class="prod-card">
+    <a href="producto.html?id=${p.id}" class="prod-card reveal">
       <div class="prod-media">
         <span class="prod-badge">✓ Legal</span>
         <span class="emoji">${p.e}</span>
@@ -916,38 +222,24 @@ function render(){
         <div class="prod-name">${p.n}</div>
         <div class="prod-desc">${p.d}</div>
         <div class="prod-foot">
-          <div class="prod-price">${formatCOP(p.p)}</div>
-          <button class="btn-add" data-name="${p.n}">Agregar +</button>
+          <div class="prod-price">${window.formatCOP(p.p)}</div>
+          <button class="btn-add" data-id="${p.id}">Agregar +</button>
         </div>
       </div>
-    </div>
+    </a>
   `).join('');
 
   grid.querySelectorAll('.btn-add').forEach(btn => {
-    btn.addEventListener('click', () => {
-      cartCount++;
-      cartCountEl.textContent = cartCount;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      window.addToCart(btn.dataset.id);
       const orig = btn.textContent;
       btn.textContent = 'Agregado ✓';
       btn.classList.add('added');
-      setTimeout(() => {
-        btn.textContent = orig;
-        btn.classList.remove('added');
-      }, 900);
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 900);
     });
   });
-}
-
-chipsEl.addEventListener('click', (e) => {
-  const chip = e.target.closest('.chip');
-  if (!chip) return;
-  chipsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  activeCat = chip.dataset.cat;
-  render();
-});
-
-render();
+})();
 </script>
 </body>
 </html>

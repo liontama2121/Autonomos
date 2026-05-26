@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Servicios — AUTONOMOS</title>
+<meta name="description" content="Marketplace de autopartes, servicios mecánicos, grúas, ambulancias, logística y trabajadores autónomos en una sola plataforma." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="servicios">
+
+<div class="bg-layer"></div>
+<div class="bg-mesh"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<nav id="nav">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">
+      <img src="image/logo_largo.png" alt="AUTONOMOS" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+      <span class="fallback grad-text">AUTONOMOS</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-nav="inicio">Inicio</a>
+      <a href="servicios.html" data-nav="servicios">Servicios</a>
+      <a href="tienda.html" data-nav="tienda">Tienda</a>
+      <a href="nosotros.html" data-nav="nosotros">Quiénes Somos</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tienda.html" class="btn btn-ghost">Ver tienda</a>
+      <a href="#cta" class="btn btn-primary">Descargar app</a>
+      <a href="tienda.html" class="cart-icon" aria-label="Carrito">🛒 <span class="cart-count" data-cart-count>0</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-nav="inicio">Inicio</a>
+  <a href="servicios.html" data-nav="servicios">Servicios</a>
+  <a href="tienda.html" data-nav="tienda">Tienda</a>
+  <a href="nosotros.html" data-nav="nosotros">Quiénes Somos</a>
+  <a href="#cta" class="btn btn-primary">Descargar app</a>
+</div>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow reveal">● Servicios</span>
+    <h1 class="reveal">Un ecosistema, <span class="grad-text">todas las soluciones</span></h1>
+    <p class="reveal">Seis líneas de servicio que tradicionalmente estaban dispersas, ahora en una sola plataforma.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="svc-detail reveal">
+      <div class="svc-detail-visual"><div class="ico">⚙️</div></div>
+      <div class="svc-detail-text">
+        <span class="eyebrow">● Marketplace</span>
+        <h2>Marketplace de Autopartes</h2>
+        <p>Catálogo unificado de repuestos nacionales e importados, con comparación de precios en tiempo real, trazabilidad de cada pieza y entrega a domicilio en tu ciudad o taller.</p>
+        <ul>
+          <li>Productos con número de lote y procedencia verificada.</li>
+          <li>Comparación lado a lado de marcas y precios.</li>
+          <li>Despacho a hogares, talleres y flotas empresariales.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="svc-detail flip reveal">
+      <div class="svc-detail-visual"><div class="ico">🔧</div></div>
+      <div class="svc-detail-text">
+        <span class="eyebrow">● Servicios Mecánicos</span>
+        <h2>Servicios Mecánicos</h2>
+        <p>Red de talleres certificados y mecánicos a domicilio listos para mantenimiento preventivo, reparación y diagnóstico electrónico donde estés.</p>
+        <ul>
+          <li>Mecánicos verificados, con calificación pública.</li>
+          <li>Cotización en tiempo real antes de aceptar el servicio.</li>
+          <li>Diagnóstico OBD-II y reparaciones a domicilio.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="svc-detail reveal">
+      <div class="svc-detail-visual"><div class="ico">🚛</div></div>
+      <div class="svc-detail-text">
+        <span class="eyebrow">● Grúas</span>
+        <h2>Grúas y Asistencia Vial</h2>
+        <p>Red nacional de grúas aliadas para remolques urbanos, transporte de vehículos entre ciudades y asistencia en carretera disponible 24 horas.</p>
+        <ul>
+          <li>Despacho de la grúa disponible más cercana.</li>
+          <li>Seguimiento en tiempo real del operador asignado.</li>
+          <li>Cobertura urbana y rutas nacionales.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="svc-detail flip reveal">
+      <div class="svc-detail-visual"><div class="ico">🚑</div></div>
+      <div class="svc-detail-text">
+        <span class="eyebrow">● Emergencias</span>
+        <h2>Ambulancias y Emergencias</h2>
+        <p>Coordinación de ambulancias y atención médica de emergencia con tiempos de respuesta optimizados mediante geolocalización.</p>
+        <ul>
+          <li>Activación con un toque desde la app.</li>
+          <li>Conexión directa con la unidad más cercana.</li>
+          <li>Reportes y trazabilidad del incidente.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="svc-detail reveal">
+      <div class="svc-detail-visual"><div class="ico">📦</div></div>
+      <div class="svc-detail-text">
+        <span class="eyebrow">● Logística</span>
+        <h2>Logística y Distribución</h2>
+        <p>Red de transporte y domicilios especializados para repuestos, herramientas y productos automotrices, con manejo y embalaje adecuados.</p>
+        <ul>
+          <li>Cobertura nacional con tarifas claras.</li>
+          <li>Despachos urgentes para talleres.</li>
+          <li>Trazabilidad de paquetes punta a punta.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="svc-detail flip reveal">
+      <div class="svc-detail-visual"><div class="ico">⭐</div></div>
+      <div class="svc-detail-text">
+        <span class="eyebrow">● Autónomos</span>
+        <h2>Trabajadores Autónomos</h2>
+        <p>Plataforma de oportunidades para mecánicos, conductores de grúa, paramédicos y prestadores independientes verificados que quieren formalizar y crecer.</p>
+        <ul>
+          <li>Validación de documentos y antecedentes.</li>
+          <li>Asignación inteligente de solicitudes por zona.</li>
+          <li>Calificación pública y crecimiento de reputación.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diferenciadores">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">● Por qué AUTONOMOS</span>
+      <h2>Diferencia que <span class="grad-text">se nota y se confía</span></h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card reveal"><div class="diff-ico">📍</div><div><h3>Geolocalización en tiempo real</h3><p>Solicitudes dirigidas al proveedor disponible más cercano, reduciendo drásticamente los tiempos de respuesta.</p></div></div>
+      <div class="diff-card reveal"><div class="diff-ico">🛡️</div><div><h3>Proveedores verificados</h3><p>Validación documental y de antecedentes para talleres, conductores de grúa, ambulancias y autónomos.</p></div></div>
+      <div class="diff-card reveal"><div class="diff-ico">💲</div><div><h3>Precios transparentes</h3><p>Cotizaciones en tiempo real lado a lado, eliminando intermediarios innecesarios y la opacidad histórica del sector.</p></div></div>
+      <div class="diff-card reveal"><div class="diff-ico">⚡</div><div><h3>Disponibilidad 24/7</h3><p>Cobertura permanente para emergencias, asistencia vial y solicitudes urgentes de repuestos o servicios.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="container">
+    <div class="cta-card reveal">
+      <span class="eyebrow">● Únete al ecosistema</span>
+      <h2>Tu carro, <span class="grad-text">en buenas manos</span></h2>
+      <p>Descarga AUTONOMOS y accede a autopartes legales, talleres certificados y asistencia 24/7 desde tu celular.</p>
+      <div class="row">
+        <a href="#" class="btn btn-primary">Descargar app →</a>
+        <a href="https://wa.me/573046452629" target="_blank" rel="noopener" class="btn btn-ghost">Hablar con un asesor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col foot-brand">
+        <img src="image/logo_largo.png" alt="AUTONOMOS" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <span class="fallback grad-text">AUTONOMOS</span>
+        <p>Plataforma tecnológica integral del sector automotriz. Autopartes, servicios, logística y asistencia vial en un solo ecosistema digital.</p>
+      </div>
+      <div class="foot-col"><h4>Plataforma</h4><ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+        <li><a href="nosotros.html">Quiénes Somos</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Aliados</h4><ul>
+        <li><a href="servicios.html">Talleres</a></li>
+        <li><a href="servicios.html">Mecánicos a domicilio</a></li>
+        <li><a href="servicios.html">Grúas y ambulancias</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Contacto</h4><ul>
+        <li><a href="https://wa.me/573046452629" target="_blank" rel="noopener">📞 304 645 2629</a></li>
+        <li><a href="#">Bogotá, Colombia</a></li>
+        <li><a href="mailto:soporte@autonomos.co">soporte@autonomos.co</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bar">
+      <div>© AUTONOMOS — Todos los derechos reservados</div>
+      <div>Hecho con amor por <span class="grad-text" style="font-weight:700;">JuanCode</span></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/573046452629" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">💬</a>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

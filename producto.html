@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Producto — AUTONOMOS</title>
+<meta name="description" content="Detalle de producto AUTONOMOS: especificaciones, precio y compra." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="tienda">
+
+<div class="bg-layer"></div>
+<div class="bg-mesh"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<nav id="nav">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">
+      <img src="image/logo_largo.png" alt="AUTONOMOS" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+      <span class="fallback grad-text">AUTONOMOS</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-nav="inicio">Inicio</a>
+      <a href="servicios.html" data-nav="servicios">Servicios</a>
+      <a href="tienda.html" data-nav="tienda">Tienda</a>
+      <a href="nosotros.html" data-nav="nosotros">Quiénes Somos</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tienda.html" class="btn btn-ghost">Ver tienda</a>
+      <a href="#" class="btn btn-primary">Descargar app</a>
+      <a href="tienda.html" class="cart-icon" aria-label="Carrito">🛒 <span class="cart-count" data-cart-count>0</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-nav="inicio">Inicio</a>
+  <a href="servicios.html" data-nav="servicios">Servicios</a>
+  <a href="tienda.html" data-nav="tienda">Tienda</a>
+  <a href="nosotros.html" data-nav="nosotros">Quiénes Somos</a>
+</div>
+
+<section class="product-page">
+  <div class="container" id="productRoot"></div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col foot-brand">
+        <img src="image/logo_largo.png" alt="AUTONOMOS" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <span class="fallback grad-text">AUTONOMOS</span>
+        <p>Plataforma tecnológica integral del sector automotriz. Autopartes, servicios, logística y asistencia vial en un solo ecosistema digital.</p>
+      </div>
+      <div class="foot-col"><h4>Plataforma</h4><ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+        <li><a href="nosotros.html">Quiénes Somos</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Aliados</h4><ul>
+        <li><a href="servicios.html">Talleres</a></li>
+        <li><a href="servicios.html">Mecánicos a domicilio</a></li>
+        <li><a href="servicios.html">Grúas y ambulancias</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Contacto</h4><ul>
+        <li><a href="https://wa.me/573046452629" target="_blank" rel="noopener">📞 304 645 2629</a></li>
+        <li><a href="#">Bogotá, Colombia</a></li>
+        <li><a href="mailto:soporte@autonomos.co">soporte@autonomos.co</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bar">
+      <div>© AUTONOMOS — Todos los derechos reservados</div>
+      <div>Hecho con amor por <span class="grad-text" style="font-weight:700;">JuanCode</span></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/573046452629" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">💬</a>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function(){
+  const root = document.getElementById('productRoot');
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const p = id ? window.findProduct(id) : null;
+
+  if (!p){
+    root.innerHTML = `
+      <div class="not-found">
+        <h2>Producto <span class="grad-text">no encontrado</span></h2>
+        <p>El producto que buscas no existe o fue retirado del catálogo.</p>
+        <a href="tienda.html" class="btn btn-primary">← Volver a la tienda</a>
+      </div>`;
+    return;
+  }
+
+  document.title = p.n + ' — AUTONOMOS';
+
+  const specsHTML = p.specs.map(s => `<div class="row"><span>${s[0]}</span><span>${s[1]}</span></div>`).join('');
+  const waMsg = encodeURIComponent(`Hola, quiero comprar: ${p.n} (${window.formatCOP(p.p)}). ID: ${p.id}`);
+
+  root.innerHTML = `
+    <div class="crumb"><a href="tienda.html">Tienda</a> / ${p.cat}</div>
+    <div class="product-grid">
+      <div class="product-media">
+        <span class="prod-badge">✓ Legal</span>
+        <span class="emoji">${p.e}</span>
+      </div>
+      <div class="product-info">
+        <h1>${p.n}</h1>
+        <div class="product-price">${window.formatCOP(p.p)}</div>
+        <p class="product-desc">${p.dl}</p>
+
+        <div class="specs-table">
+          <h4>Especificaciones</h4>
+          ${specsHTML}
+        </div>
+
+        <div class="qty-wrap">
+          <span class="qty-label">Cantidad</span>
+          <div class="qty-control">
+            <button class="qty-btn" id="qtyMinus" aria-label="restar">−</button>
+            <span class="qty-val" id="qtyVal">1</span>
+            <button class="qty-btn" id="qtyPlus" aria-label="sumar">+</button>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <button class="btn btn-primary" id="addBtn">Agregar al carrito</button>
+          <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://wa.me/573046452629?text=${waMsg}">💬 Comprar por WhatsApp</a>
+        </div>
+
+        <div class="trust-row">
+          <span>✓ Pieza legal con trazabilidad</span>
+          <span>🛡️ Proveedor verificado</span>
+          <span>🚚 Entrega a domicilio</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  let qty = 1;
+  const qtyVal = document.getElementById('qtyVal');
+  document.getElementById('qtyMinus').addEventListener('click', () => { if (qty > 1){ qty--; qtyVal.textContent = qty; } });
+  document.getElementById('qtyPlus').addEventListener('click',  () => { qty++; qtyVal.textContent = qty; });
+
+  const addBtn = document.getElementById('addBtn');
+  addBtn.addEventListener('click', () => {
+    window.addToCart(p.id, qty);
+    const orig = addBtn.textContent;
+    addBtn.textContent = `Agregado ✓ (${qty})`;
+    setTimeout(() => { addBtn.textContent = orig; }, 1100);
+  });
+
+  // Relacionados
+  const related = window.PRODUCTS.filter(x => x.c === p.c && x.id !== p.id).slice(0, 4);
+  const fallback = window.PRODUCTS.filter(x => x.id !== p.id).slice(0, 4);
+  const list = related.length ? related : fallback;
+  if (list.length){
+    const relHTML = `
+      <div class="related">
+        <h3>Productos <span class="grad-text">relacionados</span></h3>
+        <div class="prod-grid">
+          ${list.map(rp => `
+            <a href="producto.html?id=${rp.id}" class="prod-card">
+              <div class="prod-media">
+                <span class="prod-badge">✓ Legal</span>
+                <span class="emoji">${rp.e}</span>
+              </div>
+              <div class="prod-body">
+                <div class="prod-cat">${rp.cat}</div>
+                <div class="prod-name">${rp.n}</div>
+                <div class="prod-desc">${rp.d}</div>
+                <div class="prod-foot">
+                  <div class="prod-price">${window.formatCOP(rp.p)}</div>
+                </div>
+              </div>
+            </a>`).join('')}
+        </div>
+      </div>`;
+    root.insertAdjacentHTML('beforeend', relHTML);
+  }
+})();
+</script>
+</body>
+</html>

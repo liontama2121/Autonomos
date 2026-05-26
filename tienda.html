@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tienda — AUTONOMOS</title>
+<meta name="description" content="Catálogo de autopartes legales con trazabilidad. Filtra, compara, agrega al carrito y recibe en casa." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="tienda">
+
+<div class="bg-layer"></div>
+<div class="bg-mesh"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<nav id="nav">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">
+      <img src="image/logo_largo.png" alt="AUTONOMOS" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+      <span class="fallback grad-text">AUTONOMOS</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-nav="inicio">Inicio</a>
+      <a href="servicios.html" data-nav="servicios">Servicios</a>
+      <a href="tienda.html" data-nav="tienda">Tienda</a>
+      <a href="nosotros.html" data-nav="nosotros">Quiénes Somos</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tienda.html" class="btn btn-ghost">Ver tienda</a>
+      <a href="#" class="btn btn-primary">Descargar app</a>
+      <a href="#tienda" class="cart-icon" aria-label="Carrito">🛒 <span class="cart-count" data-cart-count>0</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-nav="inicio">Inicio</a>
+  <a href="servicios.html" data-nav="servicios">Servicios</a>
+  <a href="tienda.html" data-nav="tienda">Tienda</a>
+  <a href="nosotros.html" data-nav="nosotros">Quiénes Somos</a>
+</div>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow reveal">● Tienda AUTONOMOS</span>
+    <h1 class="reveal">Repuestos <span class="grad-text">legales y con garantía</span></h1>
+    <p class="reveal">Cada pieza con procedencia verificada. Compara, agrega al carrito y recíbelo en casa o en tu taller.</p>
+  </div>
+</section>
+
+<section id="tienda" style="padding-top:20px;">
+  <div class="container">
+    <div class="tienda-toolbar reveal">
+      <div class="chips" id="chips">
+        <button class="chip active" data-cat="todos">Todos</button>
+        <button class="chip" data-cat="frenos">Frenos</button>
+        <button class="chip" data-cat="motor">Motor</button>
+        <button class="chip" data-cat="electrico">Eléctrico</button>
+        <button class="chip" data-cat="llantas">Llantas</button>
+        <button class="chip" data-cat="accesorios">Accesorios</button>
+      </div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" id="search" placeholder="Buscar producto…" />
+        <a href="#" class="cart-pill">🛒 Carrito <span class="cart-count" data-cart-count>0</span></a>
+      </div>
+    </div>
+    <div class="prod-grid" id="prodGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col foot-brand">
+        <img src="image/logo_largo.png" alt="AUTONOMOS" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <span class="fallback grad-text">AUTONOMOS</span>
+        <p>Plataforma tecnológica integral del sector automotriz. Autopartes, servicios, logística y asistencia vial en un solo ecosistema digital.</p>
+      </div>
+      <div class="foot-col"><h4>Plataforma</h4><ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+        <li><a href="nosotros.html">Quiénes Somos</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Aliados</h4><ul>
+        <li><a href="servicios.html">Talleres</a></li>
+        <li><a href="servicios.html">Mecánicos a domicilio</a></li>
+        <li><a href="servicios.html">Grúas y ambulancias</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Contacto</h4><ul>
+        <li><a href="https://wa.me/573046452629" target="_blank" rel="noopener">📞 304 645 2629</a></li>
+        <li><a href="#">Bogotá, Colombia</a></li>
+        <li><a href="mailto:soporte@autonomos.co">soporte@autonomos.co</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bar">
+      <div>© AUTONOMOS — Todos los derechos reservados</div>
+      <div>Hecho con amor por <span class="grad-text" style="font-weight:700;">JuanCode</span></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/573046452629" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">💬</a>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function(){
+  const grid = document.getElementById('prodGrid');
+  const chipsEl = document.getElementById('chips');
+  const search = document.getElementById('search');
+  let activeCat = 'todos';
+  let query = '';
+
+  function render(){
+    let items = window.PRODUCTS;
+    if (activeCat !== 'todos') items = items.filter(p => p.c === activeCat);
+    if (query) {
+      const q = query.toLowerCase();
+      items = items.filter(p => p.n.toLowerCase().includes(q) || p.d.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q));
+    }
+    if (!items.length){
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">No encontramos productos con esos criterios.</div>`;
+      return;
+    }
+    grid.innerHTML = items.map(p => `
+      <a href="producto.html?id=${p.id}" class="prod-card">
+        <div class="prod-media">
+          <span class="prod-badge">✓ Legal</span>
+          <span class="emoji">${p.e}</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">${p.cat}</div>
+          <div class="prod-name">${p.n}</div>
+          <div class="prod-desc">${p.d}</div>
+          <div class="prod-foot">
+            <div class="prod-price">${window.formatCOP(p.p)}</div>
+            <button class="btn-add" data-id="${p.id}">Agregar +</button>
+          </div>
+        </div>
+      </a>
+    `).join('');
+
+    grid.querySelectorAll('.btn-add').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        window.addToCart(btn.dataset.id);
+        const orig = btn.textContent;
+        btn.textContent = 'Agregado ✓';
+        btn.classList.add('added');
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 900);
+      });
+    });
+  }
+
+  chipsEl.addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    chipsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    activeCat = chip.dataset.cat;
+    render();
+  });
+  search.addEventListener('input', (e) => { query = e.target.value.trim(); render(); });
+
+  render();
+})();
+</script>
+</body>
+</html>
